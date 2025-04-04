@@ -1,0 +1,43 @@
+|up_down_counter
+Clock => internal_count[0].CLK
+Clock => internal_count[1].CLK
+Clock => internal_count[2].CLK
+Clock => internal_count[3].CLK
+Clock => internal_count[4].CLK
+Clock => internal_count[5].CLK
+Clock => internal_count[6].CLK
+Clock => internal_count[7].CLK
+Reset => internal_count[0].ACLR
+Reset => internal_count[1].ACLR
+Reset => internal_count[2].ACLR
+Reset => internal_count[3].ACLR
+Reset => internal_count[4].ACLR
+Reset => internal_count[5].ACLR
+Reset => internal_count[6].ACLR
+Reset => internal_count[7].ACLR
+Enable => internal_count[0].ENA
+Enable => internal_count[7].ENA
+Enable => internal_count[6].ENA
+Enable => internal_count[5].ENA
+Enable => internal_count[4].ENA
+Enable => internal_count[3].ENA
+Enable => internal_count[2].ENA
+Enable => internal_count[1].ENA
+Up_Down => internal_count.OUTPUTSELECT
+Up_Down => internal_count.OUTPUTSELECT
+Up_Down => internal_count.OUTPUTSELECT
+Up_Down => internal_count.OUTPUTSELECT
+Up_Down => internal_count.OUTPUTSELECT
+Up_Down => internal_count.OUTPUTSELECT
+Up_Down => internal_count.OUTPUTSELECT
+Up_Down => internal_count.OUTPUTSELECT
+Count[0] <= internal_count[0].DB_MAX_OUTPUT_PORT_TYPE
+Count[1] <= internal_count[1].DB_MAX_OUTPUT_PORT_TYPE
+Count[2] <= internal_count[2].DB_MAX_OUTPUT_PORT_TYPE
+Count[3] <= internal_count[3].DB_MAX_OUTPUT_PORT_TYPE
+Count[4] <= internal_count[4].DB_MAX_OUTPUT_PORT_TYPE
+Count[5] <= internal_count[5].DB_MAX_OUTPUT_PORT_TYPE
+Count[6] <= internal_count[6].DB_MAX_OUTPUT_PORT_TYPE
+Count[7] <= internal_count[7].DB_MAX_OUTPUT_PORT_TYPE
+
+

@@ -1,0 +1,330 @@
+m255
+K4
+z2
+!s11e vcom 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/kokoa/Hardware_Course_Year2/seven_segment_display/simulation/qsim
+Eeven_parity_checker
+Z1 w1741091539
+Z2 DPx4 ieee 16 vital_primitives 0 22 G>kiXP8Q9dRClKfK1Zn7j1
+Z3 DPx11 fiftyfivenm 21 fiftyfivenm_atom_pack 0 22 OTUTkBjTeYVegmIWhVi3N0
+Z4 DPx4 ieee 12 vital_timing 0 22 J>EBealN09f8GzldA[z2>3
+Z5 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z6 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+Z7 DPx11 fiftyfivenm 22 fiftyfivenm_components 0 22 C5K^h=:j[4HI?HO^UkN3:2
+!i122 6
+R0
+Z8 8seven_segment_display.vho
+Z9 Fseven_segment_display.vho
+l0
+Z10 L89 1
+Vo3E8Q6E0jSY6G<bGKU`De2
+!s100 78j]fS<7f[YfN8BXdEQ6]2
+Z11 OV;C;2020.1;71
+32
+Z12 !s110 1741091541
+!i10b 1
+Z13 !s108 1741091541.000000
+Z14 !s90 -work|work|seven_segment_display.vho|
+Z15 !s107 seven_segment_display.vho|
+!i113 1
+Z16 o-work work
+Z17 tExplicit 1 CvgOpt 0
+Astructure
+R2
+R3
+R4
+R5
+R6
+R7
+DEx4 work 19 even_parity_checker 0 22 o3E8Q6E0jSY6G<bGKU`De2
+!i122 6
+l134
+L104 185
+VA4ZU^h<@iAOF3hUz^0ZL21
+!s100 [l`WlNZzS8PJmGc=I<0V11
+R11
+32
+R12
+!i10b 1
+R13
+R14
+R15
+!i113 1
+R16
+R17
+Eeven_parity_checker_vhd_vec_tst
+Z18 w1741091538
+R5
+R6
+!i122 7
+R0
+Z19 8output_files/Waveform3.vwf.vht
+Z20 Foutput_files/Waveform3.vwf.vht
+l0
+Z21 L32 1
+V2Wi>=GSfbV22X4EWCWKAD2
+!s100 GaDWkdhTTIX?EGnH]XnTX1
+R11
+32
+R12
+!i10b 1
+R13
+Z22 !s90 -work|work|output_files/Waveform3.vwf.vht|
+!s107 output_files/Waveform3.vwf.vht|
+!i113 1
+R16
+R17
+Aeven_parity_checker_arch
+R5
+R6
+DEx4 work 31 even_parity_checker_vhd_vec_tst 0 22 2Wi>=GSfbV22X4EWCWKAD2
+!i122 7
+l45
+L34 171
+VQU;I4KQ9RXjViic[FaZ;Q3
+!s100 7HHC:Qfa<?PHLZZ]WdeC?3
+R11
+32
+R12
+!i10b 1
+R13
+R22
+Z23 !s107 output_files/Waveform3.vwf.vht|
+!i113 1
+R16
+R17
+Ehard_block
+R1
+R2
+R3
+R4
+R5
+R6
+R7
+!i122 6
+R0
+R8
+R9
+l0
+L35 1
+Vhj[i;a0dD85B`o1JPT^cg2
+!s100 3A]XnMhF<;9mKUe5mn3aM1
+R11
+32
+R12
+!i10b 1
+R13
+R14
+R15
+!i113 1
+R16
+R17
+Astructure
+R2
+R3
+R4
+R5
+R6
+R7
+DEx4 work 10 hard_block 0 22 hj[i;a0dD85B`o1JPT^cg2
+!i122 6
+l76
+L54 28
+Va5ClDYec`9chO`Ne0M1NL2
+!s100 >:Wi^nX[YiN=@>>JC6K_83
+R11
+32
+R12
+!i10b 1
+R13
+R14
+R15
+!i113 1
+R16
+R17
+Eseven_segment_display
+Z24 w1741089642
+R2
+R3
+R4
+R5
+R6
+R7
+!i122 2
+R0
+R8
+R9
+l0
+R10
+VRTmjz4Lb?0AhXQ>oDHAJm2
+!s100 fbM=X>:5R8AL1`z;kO<:73
+R11
+32
+Z25 !s110 1741089643
+!i10b 1
+Z26 !s108 1741089643.000000
+R14
+R15
+!i113 1
+R16
+R17
+Astructure
+R2
+R3
+R4
+R5
+R6
+R7
+DEx4 work 21 seven_segment_display 0 22 RTmjz4Lb?0AhXQ>oDHAJm2
+!i122 2
+l165
+L116 399
+V;:VYbb@J]dkPo7KI@=kQl2
+!s100 @Na7<I[:K2MOo1En`GFnM2
+R11
+32
+R25
+!i10b 1
+R26
+R14
+R15
+!i113 1
+R16
+R17
+Eseven_segment_display_vhd_vec_tst
+Z27 w1741089640
+R5
+R6
+!i122 3
+R0
+Z28 8output_files/Waveform.vwf.vht
+Z29 Foutput_files/Waveform.vwf.vht
+l0
+R21
+VdSW<?QD>SA`mVb56Z@^1Y3
+!s100 <Wd5Db>kc^m0dmRYVD[US0
+R11
+32
+R25
+!i10b 1
+R26
+Z30 !s90 -work|work|output_files/Waveform.vwf.vht|
+Z31 !s107 output_files/Waveform.vwf.vht|
+!i113 1
+R16
+R17
+Aseven_segment_display_arch
+R5
+R6
+DEx4 work 33 seven_segment_display_vhd_vec_tst 0 22 dSW<?QD>SA`mVb56Z@^1Y3
+!i122 3
+l57
+L34 117
+VFZBm6n]K9nA9Fbf00D1VF1
+!s100 HP:f3jEVZZ6NaD?;f=]m30
+R11
+32
+R25
+!i10b 1
+R26
+R30
+R31
+!i113 1
+R16
+R17
+Etop_module
+Z32 w1741091184
+R2
+R3
+R4
+R5
+R6
+R7
+!i122 4
+R0
+R8
+R9
+l0
+R10
+V8;C<c0Kd02PWWhGccMcOX0
+!s100 ^LoE6V<kYEa`0V=W0[`Nf1
+R11
+32
+Z33 !s110 1741091186
+!i10b 1
+Z34 !s108 1741091186.000000
+R14
+R15
+!i113 1
+R16
+R17
+Astructure
+R2
+R3
+R4
+R5
+R6
+R7
+DEx4 work 10 top_module 0 22 8;C<c0Kd02PWWhGccMcOX0
+!i122 4
+l177
+L118 546
+V92dSBo:KKfMjd0Wn;jD`80
+!s100 Bgl9Rz1@9h>RnPAC::c`C3
+R11
+32
+R33
+!i10b 1
+R34
+R14
+R15
+!i113 1
+R16
+R17
+Etop_module_vhd_vec_tst
+Z35 w1741091183
+R5
+R6
+!i122 5
+R0
+Z36 8output_files/Waveform2.vwf.vht
+Z37 Foutput_files/Waveform2.vwf.vht
+l0
+R21
+VXKkTk]k<bXOOQ22PWc:;13
+!s100 78iMnkW1hRNCXKa_^1DRl1
+R11
+32
+Z38 !s110 1741091187
+!i10b 1
+Z39 !s108 1741091187.000000
+Z40 !s90 -work|work|output_files/Waveform2.vwf.vht|
+Z41 !s107 output_files/Waveform2.vwf.vht|
+!i113 1
+R16
+R17
+Atop_module_arch
+R5
+R6
+DEx4 work 22 top_module_vhd_vec_tst 0 22 XKkTk]k<bXOOQ22PWc:;13
+!i122 5
+l59
+L34 199
+VY@QdLoK?jnO6LBi95JbMD3
+!s100 [:URH1?>nFD0WN8?AVW>81
+R11
+32
+R38
+!i10b 1
+R39
+R40
+R41
+!i113 1
+R16
+R17

@@ -1,0 +1,13 @@
+|traffic_light_controller
+clk => state~3.DATAIN
+reset => state~5.DATAIN
+pedestrian_btn => state.OUTPUTSELECT
+pedestrian_btn => state.OUTPUTSELECT
+pedestrian_btn => state.OUTPUTSELECT
+car_green <= car_green.DB_MAX_OUTPUT_PORT_TYPE
+car_orange <= car_orange.DB_MAX_OUTPUT_PORT_TYPE
+car_red <= car_red.DB_MAX_OUTPUT_PORT_TYPE
+ped_red <= ped_red.DB_MAX_OUTPUT_PORT_TYPE
+ped_green <= ped_green.DB_MAX_OUTPUT_PORT_TYPE
+
+

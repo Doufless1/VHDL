@@ -1,0 +1,12 @@
+Power Analyzer Status : Successful - Mon Mar 03 12:51:25 2025
+Quartus Prime Version : 20.1.1 Build 720 11/11/2020 SJ Lite Edition
+Revision Name : three_bit_adder
+Top-level Entity Name : three_bit_adder
+Family : MAX 10
+Device : 10M08SAE144C8GES
+Power Models : Final
+Total Thermal Power Dissipation : 116.31 mW
+Core Dynamic Thermal Power Dissipation : 0.00 mW
+Core Static Thermal Power Dissipation : 110.61 mW
+I/O Thermal Power Dissipation : 5.70 mW
+Power Estimation Confidence : Low: user provided insufficient toggle rate data

@@ -1,0 +1,12 @@
+Power Analyzer Status : Successful - Mon Mar 24 13:02:40 2025
+Quartus Prime Version : 20.1.1 Build 720 11/11/2020 SJ Lite Edition
+Revision Name : traffic_light_controller
+Top-level Entity Name : traffic_light_controller
+Family : MAX 10
+Device : 10M08SAE144C8GES
+Power Models : Final
+Total Thermal Power Dissipation : 116.30 mW
+Core Dynamic Thermal Power Dissipation : 0.00 mW
+Core Static Thermal Power Dissipation : 110.61 mW
+I/O Thermal Power Dissipation : 5.69 mW
+Power Estimation Confidence : Low: user provided insufficient toggle rate data

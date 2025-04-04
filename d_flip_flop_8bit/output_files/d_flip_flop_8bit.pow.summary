@@ -1,0 +1,12 @@
+Power Analyzer Status : Successful - Mon Mar 17 12:49:45 2025
+Quartus Prime Version : 20.1.1 Build 720 11/11/2020 SJ Lite Edition
+Revision Name : d_flip_flop_8bit
+Top-level Entity Name : d_flip_flop_8bit
+Family : MAX 10
+Device : 10M08SAE144C8GES
+Power Models : Final
+Total Thermal Power Dissipation : 116.33 mW
+Core Dynamic Thermal Power Dissipation : 0.00 mW
+Core Static Thermal Power Dissipation : 110.61 mW
+I/O Thermal Power Dissipation : 5.72 mW
+Power Estimation Confidence : Low: user provided insufficient toggle rate data

@@ -1,0 +1,27 @@
+|tristate_buffer_8bit
+A[0] => Tri_out[0].DATAIN
+A[1] => Tri_out[1].DATAIN
+A[2] => Tri_out[2].DATAIN
+A[3] => Tri_out[3].DATAIN
+A[4] => Tri_out[4].DATAIN
+A[5] => Tri_out[5].DATAIN
+A[6] => Tri_out[6].DATAIN
+A[7] => Tri_out[7].DATAIN
+Control => Tri_out[0].OE
+Control => Tri_out[1].OE
+Control => Tri_out[2].OE
+Control => Tri_out[3].OE
+Control => Tri_out[4].OE
+Control => Tri_out[5].OE
+Control => Tri_out[6].OE
+Control => Tri_out[7].OE
+Tri_out[0] <> Tri_out[0]
+Tri_out[1] <> Tri_out[1]
+Tri_out[2] <> Tri_out[2]
+Tri_out[3] <> Tri_out[3]
+Tri_out[4] <> Tri_out[4]
+Tri_out[5] <> Tri_out[5]
+Tri_out[6] <> Tri_out[6]
+Tri_out[7] <> Tri_out[7]
+
+

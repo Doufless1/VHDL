@@ -1,0 +1,68 @@
+|top_module
+A[0] => Selected_Input[0].DATAB
+A[0] => even_parity_checker:Parity_Checker.A[0]
+A[1] => Selected_Input[1].DATAB
+A[1] => even_parity_checker:Parity_Checker.A[1]
+A[2] => Selected_Input[2].DATAB
+A[2] => even_parity_checker:Parity_Checker.A[2]
+A[3] => Selected_Input[3].DATAB
+A[3] => even_parity_checker:Parity_Checker.A[3]
+Display_Select => Selected_Input[3].OUTPUTSELECT
+Display_Select => Selected_Input[2].OUTPUTSELECT
+Display_Select => Selected_Input[1].OUTPUTSELECT
+Display_Select => Selected_Input[0].OUTPUTSELECT
+segment_a <= seven_segment_display:Display.segment_a
+segment_b <= seven_segment_display:Display.segment_b
+segment_c <= seven_segment_display:Display.segment_c
+segment_d <= seven_segment_display:Display.segment_d
+segment_e <= seven_segment_display:Display.segment_e
+segment_f <= seven_segment_display:Display.segment_f
+segment_g <= seven_segment_display:Display.segment_g
+
+
+|top_module|even_parity_checker:Parity_Checker
+A[0] => Parity_Out.IN0
+A[1] => Parity_Out.IN1
+A[2] => Parity_Out.IN1
+A[3] => Parity_Out.IN1
+Parity_Out <= Parity_Out.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|top_module|seven_segment_display:Display
+hex_digit[0] => Mux0.IN19
+hex_digit[0] => Mux1.IN19
+hex_digit[0] => Mux2.IN19
+hex_digit[0] => Mux3.IN19
+hex_digit[0] => Mux4.IN19
+hex_digit[0] => Mux5.IN19
+hex_digit[0] => Mux6.IN19
+hex_digit[1] => Mux0.IN18
+hex_digit[1] => Mux1.IN18
+hex_digit[1] => Mux2.IN18
+hex_digit[1] => Mux3.IN18
+hex_digit[1] => Mux4.IN18
+hex_digit[1] => Mux5.IN18
+hex_digit[1] => Mux6.IN18
+hex_digit[2] => Mux0.IN17
+hex_digit[2] => Mux1.IN17
+hex_digit[2] => Mux2.IN17
+hex_digit[2] => Mux3.IN17
+hex_digit[2] => Mux4.IN17
+hex_digit[2] => Mux5.IN17
+hex_digit[2] => Mux6.IN17
+hex_digit[3] => Mux0.IN16
+hex_digit[3] => Mux1.IN16
+hex_digit[3] => Mux2.IN16
+hex_digit[3] => Mux3.IN16
+hex_digit[3] => Mux4.IN16
+hex_digit[3] => Mux5.IN16
+hex_digit[3] => Mux6.IN16
+segment_a <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+segment_b <= Mux1.DB_MAX_OUTPUT_PORT_TYPE
+segment_c <= Mux2.DB_MAX_OUTPUT_PORT_TYPE
+segment_d <= Mux3.DB_MAX_OUTPUT_PORT_TYPE
+segment_e <= Mux4.DB_MAX_OUTPUT_PORT_TYPE
+segment_f <= Mux5.DB_MAX_OUTPUT_PORT_TYPE
+segment_g <= Mux6.DB_MAX_OUTPUT_PORT_TYPE
+
+

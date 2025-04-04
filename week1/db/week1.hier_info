@@ -1,0 +1,16 @@
+|week1
+a0 => sum0.IN0
+a0 => c1.IN0
+a1 => sum1.IN0
+a1 => carry.IN0
+a1 => carry.IN1
+b0 => sum0.IN1
+b0 => c1.IN1
+b1 => sum1.IN1
+b1 => carry.IN1
+b1 => carry.IN1
+sum0 << sum0.DB_MAX_OUTPUT_PORT_TYPE
+sum1 << sum1.DB_MAX_OUTPUT_PORT_TYPE
+carry << carry.DB_MAX_OUTPUT_PORT_TYPE
+
+

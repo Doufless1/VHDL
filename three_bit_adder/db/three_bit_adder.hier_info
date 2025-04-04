@@ -1,0 +1,47 @@
+|three_bit_adder
+A[0] => full_adder:FA0.A
+A[1] => full_adder:FA1.A
+A[2] => full_adder:FA2.A
+B[0] => full_adder:FA0.B
+B[1] => full_adder:FA1.B
+B[2] => full_adder:FA2.B
+Cin => full_adder:FA0.Cin
+Sum[0] << full_adder:FA0.Sum
+Sum[1] << full_adder:FA1.Sum
+Sum[2] << full_adder:FA2.Sum
+Cout << full_adder:FA2.Cout
+
+
+|three_bit_adder|full_adder:FA0
+A => Sum.IN0
+A => Cout.IN0
+B => Sum.IN1
+B => Cout.IN1
+Cin => Sum.IN1
+Cin => Cout.IN1
+Sum <= Sum.DB_MAX_OUTPUT_PORT_TYPE
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|three_bit_adder|full_adder:FA1
+A => Sum.IN0
+A => Cout.IN0
+B => Sum.IN1
+B => Cout.IN1
+Cin => Sum.IN1
+Cin => Cout.IN1
+Sum <= Sum.DB_MAX_OUTPUT_PORT_TYPE
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|three_bit_adder|full_adder:FA2
+A => Sum.IN0
+A => Cout.IN0
+B => Sum.IN1
+B => Cout.IN1
+Cin => Sum.IN1
+Cin => Cout.IN1
+Sum <= Sum.DB_MAX_OUTPUT_PORT_TYPE
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+
+

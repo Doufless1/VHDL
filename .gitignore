@@ -1,0 +1,11 @@
+*.rdr.flock
+*.db
+*.rpt
+*.sof
+*.qws
+*.qsf
+*.qpf
+*.sdc
+*.bak
+*.log
+

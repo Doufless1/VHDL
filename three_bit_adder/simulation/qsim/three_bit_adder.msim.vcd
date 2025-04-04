@@ -1,0 +1,520 @@
+$comment
+	File created using the following command:
+		vcd file three_bit_adder.msim.vcd -direction
+$end
+$date
+	Mon Mar 17 14:07:00 2025
+$end
+$version
+	ModelSim Version 2020.1
+$end
+$timescale
+	1ps
+$end
+
+$scope module three_bit_adder_vhd_vec_tst $end
+$var wire 1 ! A [2] $end
+$var wire 1 " A [1] $end
+$var wire 1 # A [0] $end
+$var wire 1 $ B [2] $end
+$var wire 1 % B [1] $end
+$var wire 1 & B [0] $end
+$var wire 1 ' Cin $end
+$var wire 1 ( Cout $end
+$var wire 1 ) Sum [2] $end
+$var wire 1 * Sum [1] $end
+$var wire 1 + Sum [0] $end
+
+$scope module i1 $end
+$var wire 1 , gnd $end
+$var wire 1 - vcc $end
+$var wire 1 . unknown $end
+$var wire 1 / devoe $end
+$var wire 1 0 devclrn $end
+$var wire 1 1 devpor $end
+$var wire 1 2 ww_devoe $end
+$var wire 1 3 ww_devclrn $end
+$var wire 1 4 ww_devpor $end
+$var wire 1 5 ww_A [2] $end
+$var wire 1 6 ww_A [1] $end
+$var wire 1 7 ww_A [0] $end
+$var wire 1 8 ww_B [2] $end
+$var wire 1 9 ww_B [1] $end
+$var wire 1 : ww_B [0] $end
+$var wire 1 ; ww_Cin $end
+$var wire 1 < ww_Sum [2] $end
+$var wire 1 = ww_Sum [1] $end
+$var wire 1 > ww_Sum [0] $end
+$var wire 1 ? ww_Cout $end
+$var wire 1 @ \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ [4] $end
+$var wire 1 A \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ [3] $end
+$var wire 1 B \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ [2] $end
+$var wire 1 C \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ [1] $end
+$var wire 1 D \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ [0] $end
+$var wire 1 E \~QUARTUS_CREATED_GND~I_combout\ $end
+$var wire 1 F \~QUARTUS_CREATED_UNVM~~busy\ $end
+$var wire 1 G \~QUARTUS_CREATED_ADC1~~eoc\ $end
+$var wire 1 H \Sum[0]~output_o\ $end
+$var wire 1 I \Sum[1]~output_o\ $end
+$var wire 1 J \Sum[2]~output_o\ $end
+$var wire 1 K \Cout~output_o\ $end
+$var wire 1 L \Cin~input_o\ $end
+$var wire 1 M \B[0]~input_o\ $end
+$var wire 1 N \A[0]~input_o\ $end
+$var wire 1 O \FA0|Sum~0_combout\ $end
+$var wire 1 P \B[1]~input_o\ $end
+$var wire 1 Q \A[1]~input_o\ $end
+$var wire 1 R \FA0|Cout~0_combout\ $end
+$var wire 1 S \FA1|Sum~combout\ $end
+$var wire 1 T \FA1|Cout~0_combout\ $end
+$var wire 1 U \A[2]~input_o\ $end
+$var wire 1 V \B[2]~input_o\ $end
+$var wire 1 W \FA2|Sum~combout\ $end
+$var wire 1 X \FA2|Cout~0_combout\ $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+0'
+0(
+0,
+1-
+x.
+1/
+10
+11
+12
+13
+14
+0;
+0?
+0E
+zF
+zG
+0H
+0I
+0J
+0K
+0L
+0M
+0N
+0O
+0P
+0Q
+0R
+0S
+0T
+0U
+0V
+0W
+0X
+0!
+0"
+0#
+0$
+0%
+0&
+0)
+0*
+0+
+05
+06
+07
+08
+09
+0:
+0<
+0=
+0>
+0@
+0A
+0B
+0C
+0D
+$end
+#20000
+1#
+1&
+17
+1:
+1M
+1N
+1R
+1S
+1I
+1=
+1*
+#30000
+0#
+0&
+07
+0:
+0M
+0N
+0R
+0S
+0I
+0=
+0*
+#60000
+1#
+1&
+1'
+17
+1:
+1;
+1L
+1M
+1N
+1O
+1R
+1H
+1S
+1>
+1I
+1+
+1=
+1*
+#70000
+0#
+0&
+0'
+07
+0:
+0;
+0L
+0M
+0N
+0O
+0R
+0H
+0S
+0>
+0I
+0+
+0=
+0*
+#90000
+1#
+1&
+1"
+1%
+17
+16
+1:
+19
+1P
+1M
+1Q
+1N
+1R
+1T
+1W
+1S
+1I
+1J
+1=
+1<
+1*
+1)
+#100000
+0#
+0&
+0"
+0%
+07
+06
+0:
+09
+0P
+0M
+0Q
+0N
+0R
+0T
+0W
+0S
+0I
+0J
+0=
+0<
+0*
+0)
+#120000
+1#
+1&
+1"
+1%
+1'
+17
+16
+1:
+19
+1;
+1L
+1P
+1M
+1Q
+1N
+1T
+1O
+1R
+1H
+1S
+1W
+1>
+1J
+1I
+1+
+1<
+1=
+1*
+1)
+#130000
+0#
+0&
+0"
+0%
+0'
+07
+06
+0:
+09
+0;
+0L
+0P
+0M
+0Q
+0N
+0T
+0O
+0R
+0H
+0S
+0W
+0>
+0J
+0I
+0+
+0<
+0=
+0*
+0)
+#150000
+1#
+1&
+1%
+1!
+17
+15
+1:
+19
+1P
+1M
+1U
+1N
+1W
+1R
+1S
+1I
+1J
+0S
+1T
+1=
+1<
+0I
+0W
+1X
+1*
+1)
+0=
+1K
+0J
+0*
+1?
+0<
+1(
+0)
+#160000
+0#
+0&
+0%
+0!
+07
+05
+0:
+09
+0P
+0M
+0U
+0N
+1W
+0X
+0R
+1S
+0T
+1I
+0K
+1J
+0W
+0S
+1=
+0?
+1<
+0I
+0J
+1*
+1)
+0(
+0=
+0<
+0*
+0)
+#180000
+1#
+1&
+1%
+1!
+1"
+1$
+17
+16
+15
+1:
+19
+18
+1V
+1P
+1M
+1U
+1Q
+1N
+1R
+1T
+1X
+1K
+1W
+1S
+1?
+1I
+1J
+1(
+1=
+1<
+1*
+1)
+#190000
+0#
+0&
+0%
+0!
+0"
+0$
+07
+06
+05
+0:
+09
+08
+0V
+0P
+0M
+0U
+0Q
+0N
+0R
+0T
+0X
+0K
+0W
+0S
+0?
+0I
+0J
+0(
+0=
+0<
+0*
+0)
+#210000
+1#
+1&
+1%
+1!
+1"
+1$
+1'
+17
+16
+15
+1:
+19
+18
+1;
+1L
+1V
+1P
+1M
+1U
+1Q
+1N
+1T
+1X
+1O
+1R
+1H
+1K
+1S
+1W
+1>
+1?
+1J
+1I
+1+
+1(
+1<
+1=
+1*
+1)
+#220000
+0#
+0&
+0%
+0!
+0"
+0$
+0'
+07
+06
+05
+0:
+09
+08
+0;
+0L
+0V
+0P
+0M
+0U
+0Q
+0N
+0T
+0X
+0O
+0R
+0H
+0K
+0S
+0W
+0>
+0?
+0J
+0I
+0+
+0(
+0<
+0=
+0*
+0)
+#1000000

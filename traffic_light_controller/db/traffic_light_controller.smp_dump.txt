@@ -1,0 +1,6 @@
+
+State Machine - |traffic_light_controller|state
+Name state.cars_red state.cars_orange state.cars_green 
+state.cars_green 0 0 0 
+state.cars_orange 0 1 1 
+state.cars_red 1 0 1 

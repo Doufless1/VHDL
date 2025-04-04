@@ -1,0 +1,496 @@
+$comment
+	File created using the following command:
+		vcd file up_down_counter.msim.vcd -direction
+$end
+$date
+	Mon Mar 24 12:27:07 2025
+$end
+$version
+	ModelSim Version 2020.1
+$end
+$timescale
+	1ps
+$end
+
+$scope module up_down_counter_vhd_vec_tst $end
+$var wire 1 ! Clock $end
+$var wire 1 " Count [7] $end
+$var wire 1 # Count [6] $end
+$var wire 1 $ Count [5] $end
+$var wire 1 % Count [4] $end
+$var wire 1 & Count [3] $end
+$var wire 1 ' Count [2] $end
+$var wire 1 ( Count [1] $end
+$var wire 1 ) Count [0] $end
+$var wire 1 * Enable $end
+$var wire 1 + Reset $end
+$var wire 1 , Up_Down $end
+
+$scope module i1 $end
+$var wire 1 - gnd $end
+$var wire 1 . vcc $end
+$var wire 1 / unknown $end
+$var wire 1 0 devoe $end
+$var wire 1 1 devclrn $end
+$var wire 1 2 devpor $end
+$var wire 1 3 ww_devoe $end
+$var wire 1 4 ww_devclrn $end
+$var wire 1 5 ww_devpor $end
+$var wire 1 6 ww_Clock $end
+$var wire 1 7 ww_Reset $end
+$var wire 1 8 ww_Enable $end
+$var wire 1 9 ww_Up_Down $end
+$var wire 1 : ww_Count [7] $end
+$var wire 1 ; ww_Count [6] $end
+$var wire 1 < ww_Count [5] $end
+$var wire 1 = ww_Count [4] $end
+$var wire 1 > ww_Count [3] $end
+$var wire 1 ? ww_Count [2] $end
+$var wire 1 @ ww_Count [1] $end
+$var wire 1 A ww_Count [0] $end
+$var wire 1 B \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ [4] $end
+$var wire 1 C \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ [3] $end
+$var wire 1 D \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ [2] $end
+$var wire 1 E \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ [1] $end
+$var wire 1 F \~QUARTUS_CREATED_ADC1~_CHSEL_bus\ [0] $end
+$var wire 1 G \Reset~inputclkctrl_INCLK_bus\ [3] $end
+$var wire 1 H \Reset~inputclkctrl_INCLK_bus\ [2] $end
+$var wire 1 I \Reset~inputclkctrl_INCLK_bus\ [1] $end
+$var wire 1 J \Reset~inputclkctrl_INCLK_bus\ [0] $end
+$var wire 1 K \Clock~inputclkctrl_INCLK_bus\ [3] $end
+$var wire 1 L \Clock~inputclkctrl_INCLK_bus\ [2] $end
+$var wire 1 M \Clock~inputclkctrl_INCLK_bus\ [1] $end
+$var wire 1 N \Clock~inputclkctrl_INCLK_bus\ [0] $end
+$var wire 1 O \~QUARTUS_CREATED_GND~I_combout\ $end
+$var wire 1 P \~QUARTUS_CREATED_UNVM~~busy\ $end
+$var wire 1 Q \~QUARTUS_CREATED_ADC1~~eoc\ $end
+$var wire 1 R \Count[0]~output_o\ $end
+$var wire 1 S \Count[1]~output_o\ $end
+$var wire 1 T \Count[2]~output_o\ $end
+$var wire 1 U \Count[3]~output_o\ $end
+$var wire 1 V \Count[4]~output_o\ $end
+$var wire 1 W \Count[5]~output_o\ $end
+$var wire 1 X \Count[6]~output_o\ $end
+$var wire 1 Y \Count[7]~output_o\ $end
+$var wire 1 Z \Clock~input_o\ $end
+$var wire 1 [ \Clock~inputclkctrl_outclk\ $end
+$var wire 1 \ \internal_count[0]~8_combout\ $end
+$var wire 1 ] \Reset~input_o\ $end
+$var wire 1 ^ \Reset~inputclkctrl_outclk\ $end
+$var wire 1 _ \Enable~input_o\ $end
+$var wire 1 ` \Up_Down~input_o\ $end
+$var wire 1 a \internal_count[0]~9\ $end
+$var wire 1 b \internal_count[1]~10_combout\ $end
+$var wire 1 c \internal_count[1]~11\ $end
+$var wire 1 d \internal_count[2]~12_combout\ $end
+$var wire 1 e \internal_count[2]~13\ $end
+$var wire 1 f \internal_count[3]~14_combout\ $end
+$var wire 1 g \internal_count[3]~15\ $end
+$var wire 1 h \internal_count[4]~16_combout\ $end
+$var wire 1 i \internal_count[4]~17\ $end
+$var wire 1 j \internal_count[5]~18_combout\ $end
+$var wire 1 k \internal_count[5]~19\ $end
+$var wire 1 l \internal_count[6]~20_combout\ $end
+$var wire 1 m \internal_count[6]~21\ $end
+$var wire 1 n \internal_count[7]~22_combout\ $end
+$var wire 1 o internal_count [7] $end
+$var wire 1 p internal_count [6] $end
+$var wire 1 q internal_count [5] $end
+$var wire 1 r internal_count [4] $end
+$var wire 1 s internal_count [3] $end
+$var wire 1 t internal_count [2] $end
+$var wire 1 u internal_count [1] $end
+$var wire 1 v internal_count [0] $end
+$var wire 1 w \ALT_INV_Reset~inputclkctrl_outclk\ $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+0!
+0*
+1+
+x,
+0-
+1.
+x/
+10
+11
+12
+13
+14
+15
+06
+17
+08
+x9
+0O
+zP
+zQ
+0R
+0S
+0T
+0U
+0V
+0W
+0X
+0Y
+0Z
+0[
+1\
+1]
+1^
+0_
+x`
+0a
+xb
+1c
+xd
+0e
+xf
+1g
+xh
+0i
+xj
+1k
+xl
+0m
+xn
+0w
+0:
+0;
+0<
+0=
+0>
+0?
+0@
+0A
+0o
+0p
+0q
+0r
+0s
+0t
+0u
+0v
+1K
+1L
+1M
+0N
+1G
+1H
+1I
+1J
+0B
+0C
+0D
+0E
+0F
+0"
+0#
+0$
+0%
+0&
+0'
+0(
+0)
+$end
+#10000
+0+
+0,
+07
+09
+0`
+0]
+0J
+1b
+1d
+1f
+1h
+1j
+1l
+1n
+0^
+1w
+#20000
+1,
+1!
+1*
+19
+16
+18
+1_
+1Z
+1`
+1N
+0b
+0d
+0f
+0h
+0j
+0l
+0n
+1[
+1v
+1R
+0\
+1a
+1A
+1b
+1)
+#30000
+0,
+0*
+09
+08
+0_
+0`
+0b
+0c
+1d
+1f
+1h
+1j
+1l
+1n
+0d
+1e
+0f
+0g
+0h
+1i
+0j
+0k
+0l
+1m
+0n
+#40000
+0!
+06
+0Z
+0N
+0[
+#60000
+1!
+1,
+1*
+16
+19
+18
+1_
+1`
+1Z
+1N
+1b
+1c
+1d
+0e
+1f
+1g
+1h
+0i
+1j
+1k
+1l
+0m
+1n
+0n
+0l
+0j
+0h
+0f
+0d
+1[
+0v
+1u
+1S
+0R
+0b
+0c
+1\
+0a
+1@
+0A
+1b
+1c
+1d
+0)
+1(
+0d
+#70000
+0,
+0*
+09
+08
+0_
+0`
+0b
+0c
+1d
+1f
+1h
+1j
+1l
+1n
+0d
+1e
+0f
+0g
+0h
+1i
+0j
+0k
+0l
+1m
+0n
+#80000
+0!
+06
+0Z
+0N
+0[
+#100000
+1!
+1*
+16
+18
+1_
+1Z
+1N
+1[
+1v
+0u
+0S
+1R
+1b
+1c
+0\
+1a
+0@
+1A
+0b
+0c
+1d
+0e
+1)
+0(
+1f
+1g
+0d
+1e
+0f
+0g
+1h
+0i
+1j
+1k
+0h
+1i
+0j
+0k
+1l
+0m
+1n
+0l
+1m
+0n
+#110000
+0*
+08
+0_
+#120000
+0!
+06
+0Z
+0N
+0[
+#140000
+1!
+1*
+16
+18
+1_
+1Z
+1N
+1[
+0v
+0R
+1\
+0a
+0A
+1b
+1c
+0)
+1d
+0e
+1f
+1g
+1h
+0i
+1j
+1k
+1l
+0m
+1n
+#150000
+0*
+08
+0_
+#160000
+0!
+06
+0Z
+0N
+0[
+#180000
+1!
+x*
+x,
+1+
+16
+x8
+x9
+17
+1]
+x`
+x_
+1Z
+1J
+1N
+xb
+xd
+xf
+xh
+xj
+xl
+xn
+1[
+1^
+0w
+#190000
+0*
+0,
+0+
+08
+09
+07
+0]
+0`
+0_
+0J
+1b
+1d
+1f
+1h
+1j
+1l
+1n
+0^
+1w
+#200000
+0!
+06
+0Z
+0N
+0[
+#1000000

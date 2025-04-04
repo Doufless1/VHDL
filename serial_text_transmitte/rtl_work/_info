@@ -1,0 +1,95 @@
+m255
+K4
+z2
+!s11e vcom 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/kokoa/Hardware_Course_Year2/serial_text_transmitte
+Eserial_text_transmitte
+Z1 w1743607665
+Z2 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 2
+R0
+Z5 8serial_text_transmitte.vhd
+Z6 Fserial_text_transmitte.vhd
+l0
+L5 1
+VhgIfElnIQVE<I^F]hZZC_2
+!s100 Xl>VJg@G9R59Z=G:DEiho2
+Z7 OV;C;2020.1;71
+32
+Z8 !s110 1743611792
+!i10b 1
+Z9 !s108 1743611792.000000
+Z10 !s90 -reportprogress|300|serial_text_transmitte.vhd|
+Z11 !s107 serial_text_transmitte.vhd|
+!i113 1
+Z12 tExplicit 1 CvgOpt 0
+Abehavioral
+R2
+R3
+R4
+DEx4 work 22 serial_text_transmitte 0 22 hgIfElnIQVE<I^F]hZZC_2
+!i122 2
+l42
+L13 98
+V:j7j68?CQP:QY3EQ;O2>n1
+!s100 i1g>mXC_Yfh[i5TBFCF1f3
+R7
+32
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+Euart_receiver_tb
+Z13 w1743612855
+Z14 DPx4 ieee 16 std_logic_textio 0 22 ^l:n6VFdg74Q?CKDhjD]D3
+R2
+R3
+R4
+!i122 7
+R0
+Z15 8uart_receiver_tb.vhd
+Z16 Fuart_receiver_tb.vhd
+l0
+L7 1
+V[;@B8fKE6QZTk]=?hgVCz0
+!s100 lI<a?8jmT247Kjgl5VAdT1
+R7
+32
+Z17 !s110 1743613318
+!i10b 1
+Z18 !s108 1743613318.000000
+Z19 !s90 -reportprogress|300|uart_receiver_tb.vhd|
+Z20 !s107 uart_receiver_tb.vhd|
+!i113 1
+R12
+Abehavioral
+R14
+R2
+R3
+R4
+Z21 DEx4 work 16 uart_receiver_tb 0 22 [;@B8fKE6QZTk]=?hgVCz0
+!i122 7
+l43
+Z22 L10 97
+Z23 VdYMPIYaoF;mY[LcIOk7jH0
+Z24 !s100 G@`_;aBY^j87;kI]6j`IK2
+R7
+32
+R17
+!i10b 1
+R18
+R19
+R20
+!i113 1
+R12

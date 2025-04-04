@@ -1,0 +1,133 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "ALU_output[0]",
+					"strict" : false
+				},
+				{
+					"name" : "ALU_output[1]",
+					"strict" : false
+				},
+				{
+					"name" : "ALU_output[2]",
+					"strict" : false
+				},
+				{
+					"name" : "ALU_output[3]",
+					"strict" : false
+				},
+				{
+					"name" : "ALU_output[4]",
+					"strict" : false
+				},
+				{
+					"name" : "ALU_output[5]",
+					"strict" : false
+				},
+				{
+					"name" : "ALU_output[6]",
+					"strict" : false
+				},
+				{
+					"name" : "ALU_output[7]",
+					"strict" : false
+				},
+				{
+					"name" : "B_input[0]",
+					"strict" : false
+				},
+				{
+					"name" : "A_input[0]",
+					"strict" : false
+				},
+				{
+					"name" : "op_code[2]",
+					"strict" : false
+				},
+				{
+					"name" : "op_code[0]",
+					"strict" : false
+				},
+				{
+					"name" : "op_code[1]",
+					"strict" : false
+				},
+				{
+					"name" : "op_code[3]",
+					"strict" : false
+				},
+				{
+					"name" : "op_code[4]",
+					"strict" : false
+				},
+				{
+					"name" : "op_code[5]",
+					"strict" : false
+				},
+				{
+					"name" : "op_code[6]",
+					"strict" : false
+				},
+				{
+					"name" : "B_input[1]",
+					"strict" : false
+				},
+				{
+					"name" : "A_input[1]",
+					"strict" : false
+				},
+				{
+					"name" : "B_input[2]",
+					"strict" : false
+				},
+				{
+					"name" : "A_input[2]",
+					"strict" : false
+				},
+				{
+					"name" : "B_input[3]",
+					"strict" : false
+				},
+				{
+					"name" : "A_input[3]",
+					"strict" : false
+				},
+				{
+					"name" : "B_input[4]",
+					"strict" : false
+				},
+				{
+					"name" : "A_input[4]",
+					"strict" : false
+				},
+				{
+					"name" : "B_input[5]",
+					"strict" : false
+				},
+				{
+					"name" : "A_input[5]",
+					"strict" : false
+				},
+				{
+					"name" : "B_input[6]",
+					"strict" : false
+				},
+				{
+					"name" : "A_input[6]",
+					"strict" : false
+				},
+				{
+					"name" : "B_input[7]",
+					"strict" : false
+				},
+				{
+					"name" : "A_input[7]",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

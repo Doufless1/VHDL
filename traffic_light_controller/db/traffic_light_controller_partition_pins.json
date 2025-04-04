@@ -1,0 +1,41 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "car_green",
+					"strict" : false
+				},
+				{
+					"name" : "car_orange",
+					"strict" : false
+				},
+				{
+					"name" : "car_red",
+					"strict" : false
+				},
+				{
+					"name" : "ped_red",
+					"strict" : false
+				},
+				{
+					"name" : "ped_green",
+					"strict" : false
+				},
+				{
+					"name" : "pedestrian_btn",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "reset",
+					"strict" : false
+				}
+			]
+		}
+	]
+}
