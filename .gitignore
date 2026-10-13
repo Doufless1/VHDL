@@ -1,11 +1,61 @@
-*.rdr.flock
-*.db
-*.rpt
-*.sof
-*.qws
-*.qsf
+# -----------------------------------------------------------------------------
+# Source of truth is: VHDL (rtl/, tb/), Tcl project scripts, SDC constraints,
+# Python scripts and docs. Everything a tool generates is ignored.
+# -----------------------------------------------------------------------------
+
+# --- Simulation / regression (GHDL, VUnit, ModelSim/Questa) ---
+vunit_out/
+*.o
+*.cf
+*.ghw
+*.vcd
+*.fst
+*.wlf
+transcript
+modelsim.ini
+work/
+
+# --- Formal verification scratch ---
+build/
+
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- Intel Quartus Prime: generated project + build outputs ---
+# Projects are recreated with `quartus_sh -t create_project.tcl`,
+# so the generated .qpf/.qsf files are not tracked.
 *.qpf
-*.sdc
+*.qsf
+*.qws
+db/
+incremental_db/
+output_files/
+simulation/
+qdb/
+tmp-clearbox/
+greybox_tmp/
+*.rpt
+*.summary
+*.smsg
+*.done
+*.pin
+*.pof
+*.sof
+*.jdi
+*.sld
+*.cdf
+*.qarlog
+*.rdr.flock
 *.bak
 *.log
+cr_ie_info.json
 
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
