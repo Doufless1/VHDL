@@ -1,117 +1,95 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL;
+--------------------------------------------------------------------------------
+-- serial_text_transmitter : sends a text message over UART, over and over
+--
+-- Course final assignment ("serial send at 9600 baud"). The lab version mixed
+-- the bit timing and the text ROM in one state machine; it is now split into
+-- a character ROM that feeds the reusable uart_tx through its handshake.
+--
+--   reset (button) -> sync_2ff -> rst
+--   ROM("HELLO!\r\n") --tx_data/tx_valid--> uart_tx --> tx pin
+--                     <------tx_ready------
+--------------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
-entity serial_text_transmitte is
-    Port (
-        clk         : in  std_logic;        -- System clock (assumed to be 50MHz)
-        reset       : in  std_logic;        -- Active high reset
-        tx          : out std_logic         -- Serial output line
-    );
-end serial_text_transmitte;
+entity serial_text_transmitter is
+  generic (
+    CLK_FREQ : positive := 50_000_000;
+    BAUD     : positive := 9_600;
+    MESSAGE  : string   := "HELLO!" & CR & LF
+  );
+  port (
+    clk   : in  std_logic;
+    reset : in  std_logic;   -- push button, active high, asynchronous
+    tx    : out std_logic    -- UART output (to a USB-serial adapter)
+  );
+end entity serial_text_transmitter;
 
-architecture Behavioral of serial_text_transmitte is
-    -- Constants
-    constant BAUD_RATE     : integer := 9600;
-    constant CLK_FREQ      : integer := 50000000; -- 50 MHz
-    constant BAUD_DIVIDER  : integer := CLK_FREQ / BAUD_RATE;
-    
-    -- Text to transmit repeatedly
-    type ROM_TYPE is array (0 to 5) of std_logic_vector(7 downto 0);
-    constant TEXT_ROM : ROM_TYPE := (
-        X"48", -- H (ASCII: 72)
-        X"45", -- E (ASCII: 69)
-        X"4C", -- L (ASCII: 76)
-        X"4C", -- L (ASCII: 76)
-        X"4F", -- O (ASCII: 79)
-        X"21"  -- ! (ASCII: 33)
-    );
-    constant ROM_SIZE : integer := 6;
-    
-    -- State machine states
-    type state_type is (IDLE, START_BIT, DATA_BITS, STOP_BIT);
-    signal state : state_type := IDLE;
-    
-    -- Counters and control signals
-    signal baud_counter   : integer range 0 to BAUD_DIVIDER - 1 := 0;
-    signal bit_counter    : integer range 0 to 7 := 0;
-    signal char_index     : integer range 0 to ROM_SIZE - 1 := 0;
-    signal tx_data        : std_logic_vector(7 downto 0) := (others => '0');
-    signal baud_tick      : std_logic := '0';
-    
+architecture rtl of serial_text_transmitter is
+
+  type rom_t is array (0 to MESSAGE'length - 1) of std_logic_vector(7 downto 0);
+
+  function to_rom (s : string) return rom_t is
+    variable rom : rom_t;
+  begin
+    for i in rom'range loop
+      rom(i) := std_logic_vector(to_unsigned(character'pos(s(s'low + i)), 8));
+    end loop;
+    return rom;
+  end function to_rom;
+
+  constant ROM : rom_t := to_rom(MESSAGE);
+
+  signal rst      : std_logic;
+  signal index    : natural range 0 to ROM'high := 0;
+  signal tx_byte  : std_logic_vector(7 downto 0);
+  signal tx_valid : std_logic;
+  signal tx_ready : std_logic;
+
 begin
-    -- Baud rate generator
-    baud_generator: process(clk, reset)
-    begin
-        if reset = '1' then
-            baud_counter <= 0;
-            baud_tick <= '0';
-        elsif rising_edge(clk) then
-            if baud_counter = BAUD_DIVIDER - 1 then
-                baud_counter <= 0;
-                baud_tick <= '1';
-            else
-                baud_counter <= baud_counter + 1;
-                baud_tick <= '0';
-            end if;
-        end if;
-    end process;
-    
-    -- Main transmission state machine
-    tx_process: process(clk, reset)
-    begin
-        if reset = '1' then
-            state <= IDLE;
-            bit_counter <= 0;
-            char_index <= 0;
-            tx <= '1';  -- Idle state is high
-            tx_data <= (others => '0');
-        elsif rising_edge(clk) then
-            if baud_tick = '1' then
-                case state is
-                    when IDLE =>
-                        -- Load next character and start transmission
-                        tx_data <= TEXT_ROM(char_index);
-                        tx <= '0';  -- Start bit
-                        state <= DATA_BITS;
-                        bit_counter <= 0;
-                        
-                    when START_BIT =>
-                        -- This state is defined but not used in original code
-                        -- Adding it for completeness
-                        tx <= '0';  -- Start bit
-                        state <= DATA_BITS;
-                        bit_counter <= 0;
-                        
-                    when DATA_BITS =>
-                        -- Transmit data bits (LSB first)
-                        tx <= tx_data(bit_counter);
-                        
-                        if bit_counter = 7 then
-                            state <= STOP_BIT;
-                        else
-                            bit_counter <= bit_counter + 1;
-                        end if;
-                        
-                    when STOP_BIT =>
-                        -- Send stop bit
-                        tx <= '1';
-                        
-                        -- Move to next character
-                        if char_index = ROM_SIZE - 1 then
-                            char_index <= 0;
-                        else
-                            char_index <= char_index + 1;
-                        end if;
-                        
-                        state <= IDLE;
-                        
-                    when others =>
-                        state <= IDLE;
-                        tx <= '1';
-                end case;
-            end if;
-        end if;
-    end process;
 
-end Behavioral;
+  -- the button is asynchronous: synchronise it before it resets anything;
+  -- INIT = '1' also holds the design in reset for two cycles at power-up
+  u_rst_sync : entity work.sync_2ff
+    generic map (INIT => '1')
+    port map (
+      clk      => clk,
+      async_in => reset,
+      sync_out => rst
+    );
+
+  -- message pointer: advances on every accepted byte, wraps at the end
+  process (clk)
+  begin
+    if rising_edge(clk) then
+      if rst = '1' then
+        index <= 0;
+      elsif tx_valid = '1' and tx_ready = '1' then
+        if index = ROM'high then
+          index <= 0;
+        else
+          index <= index + 1;
+        end if;
+      end if;
+    end if;
+  end process;
+
+  tx_byte  <= ROM(index);
+  tx_valid <= not rst;
+
+  u_uart_tx : entity work.uart_tx
+    generic map (
+      CLK_FREQ => CLK_FREQ,
+      BAUD     => BAUD
+    )
+    port map (
+      clk      => clk,
+      rst      => rst,
+      tx_data  => tx_byte,
+      tx_valid => tx_valid,
+      tx_ready => tx_ready,
+      tx       => tx
+    );
+
+end architecture rtl;

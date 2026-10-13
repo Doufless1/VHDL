@@ -1,106 +1,83 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL;
-use std.textio.all;
-use ieee.std_logic_textio.all;
+--------------------------------------------------------------------------------
+-- uart_bfm_pkg : UART bus-functional models shared by the UART testbenches
+--
+-- uart_send    drives one 8N1 frame onto a line. The bit time is a parameter,
+--              so a test can play an off-frequency sender, and the stop bit
+--              can be forced to '0' to provoke a framing error.
+-- uart_receive behaves like an ideal receiver: waits for the start edge,
+--              samples every bit in its centre, reports the byte and whether
+--              the stop bit was '1'.
+-- printable    formats a byte for log messages: 'H' (0x48), <0D> (0x0D).
+--
+-- The original lab testbench printed bytes with a hand-written hex function
+-- that emitted the nibbles in reverse order ('H' = 0x48 came out as "84").
+-- The BFM now uses VHDL-2008's standard to_hstring.
+--------------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
-entity uart_receiver_tb is
-end entity;
+package uart_bfm_pkg is
 
-architecture Behavioral of uart_receiver_tb is
-    component serial_text_transmitte
-        Port (
-            clk   : in  std_logic;
-            reset : in  std_logic;
-            tx    : out std_logic
-        );
-    end component;
+  procedure uart_send (
+    signal   line     : out std_logic;
+    constant data     : in  std_logic_vector(7 downto 0);
+    constant bit_time : in  time;
+    constant stop_bit : in  std_logic := '1');
 
-    constant CLK_PERIOD : time := 20 ns; -- 50 MHz
-    constant BAUD_RATE  : integer := 9600;
-    constant BIT_TIME   : time := 104.167 us;  -- precise bit duration
+  procedure uart_receive (
+    signal   line     : in  std_logic;
+    constant bit_time : in  time;
+    variable data     : out std_logic_vector(7 downto 0);
+    variable stop_ok  : out boolean);
 
-    signal clk      : std_logic := '0';
-    signal reset    : std_logic := '1';
-    signal tx       : std_logic := '1';
-    signal sim_done : boolean := false;
+  function printable (data : std_logic_vector(7 downto 0)) return string;
 
-    -- Function to convert std_logic_vector to hex string (since to_hstring may not be available)
-    function to_hex_string(slv: std_logic_vector) return string is
-        constant hex_table: string(1 to 16) := "0123456789ABCDEF";
-        variable result: string(1 to slv'length/4);
-        variable temp: std_logic_vector(3 downto 0);
-        variable nibble_pos: integer;
-    begin
-        for i in result'range loop
-            nibble_pos := (i-1)*4;
-            temp := slv(nibble_pos+3 downto nibble_pos);
-            result(i) := hex_table(to_integer(unsigned(temp))+1);
-        end loop;
-        return result;
-    end function;
+end package uart_bfm_pkg;
 
-begin
+package body uart_bfm_pkg is
 
-    -- Instantiate the DUT
-    dut: serial_text_transmitte
-        port map (
-            clk   => clk,
-            reset => reset,
-            tx    => tx
-        );
+  procedure uart_send (
+    signal   line     : out std_logic;
+    constant data     : in  std_logic_vector(7 downto 0);
+    constant bit_time : in  time;
+    constant stop_bit : in  std_logic := '1') is
+  begin
+    line <= '0';                                   -- start bit
+    wait for bit_time;
+    for i in 0 to 7 loop                           -- data, LSB first
+      line <= data(i);
+      wait for bit_time;
+    end loop;
+    line <= stop_bit;                              -- stop bit
+    wait for bit_time;
+    line <= '1';                                   -- idle
+  end procedure uart_send;
 
-    -- Clock generation
-    clk_process: process
-    begin
-        while not sim_done loop
-            clk <= '0';
-            wait for CLK_PERIOD / 2;
-            clk <= '1';
-            wait for CLK_PERIOD / 2;
-        end loop;
-        wait;
-    end process;
+  procedure uart_receive (
+    signal   line     : in  std_logic;
+    constant bit_time : in  time;
+    variable data     : out std_logic_vector(7 downto 0);
+    variable stop_ok  : out boolean) is
+  begin
+    wait until line = '0';                         -- start edge
+    wait for bit_time / 2;                         -- centre of the start bit
+    for i in 0 to 7 loop
+      wait for bit_time;                           -- centre of data bit i
+      data(i) := line;
+    end loop;
+    wait for bit_time;                             -- centre of the stop bit
+    stop_ok := line = '1';
+  end procedure uart_receive;
 
-    -- UART Receiver process
-    uart_receiver: process
-        variable v_char : character;
-        variable v_byte : std_logic_vector(7 downto 0);
-        variable L : line;
-    begin
-        wait for 100 ns;
-        reset <= '0';
+  function printable (data : std_logic_vector(7 downto 0)) return string is
+    constant code : natural := to_integer(unsigned(data));
+  begin
+    if code >= 32 and code < 127 then
+      return "'" & character'val(code) & "' (0x" & to_hstring(data) & ")";
+    else
+      return "<" & to_hstring(data) & ">";
+    end if;
+  end function printable;
 
-        for i in 0 to 20 loop  -- receive up to 20 characters
-            -- Wait for start bit
-            wait until falling_edge(tx);
-            wait for BIT_TIME/2;  -- Wait half bit time
-            
-            -- Verify we're still in start bit
-            assert tx = '0' report "False start bit detected" severity warning;
-            wait for BIT_TIME;  -- Now at middle of first data bit
-            
-            -- Collect 8 data bits - IMPORTANT: Reversing bit order for correct reception
-            for bit_idx in 0 to 7 loop
-                v_byte(bit_idx) := tx;  -- Store bits LSB first
-                wait for BIT_TIME;
-            end loop;
-
-            -- Check for stop bit
-            assert tx = '1' report "Invalid stop bit" severity warning;
-
-            -- Print received character
-            v_char := character'val(to_integer(unsigned(v_byte)));
-            write(L, string'("Received: "));
-            write(L, v_char);
-            write(L, string'(" (Hex: 0x"));
-            write(L, to_hex_string(v_byte));
-            write(L, string'(")"));
-            writeline(output, L);
-        end loop;
-
-        sim_done <= true;
-        wait;
-    end process;
-
-end architecture;
+end package body uart_bfm_pkg;

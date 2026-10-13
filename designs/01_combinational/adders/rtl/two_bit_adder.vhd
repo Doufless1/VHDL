@@ -1,34 +1,31 @@
--- designer J.S.D. Stokkink
--- december 2014
-
--- function 2 inputs a and b are added , both have two bits , a0 a1, b0 b1.
--- output sum (sum0 sum1 and carry)
-
--- for board "Danjel"
--- input a0 IO45 pin 51
--- input a1 IO43 pin 52
--- input b0 IO41 pin 53
--- input b1 IO40 pin 54
--- output sum0 LED pin 83
--- output sum1 LED pin 82
--- output carry LED pin 81
-
+--------------------------------------------------------------------------------
+-- two_bit_adder : 2-bit adder written as gate-level boolean equations
+--
+-- Week-1 lab, the first design taken to the MAX 10 board (switches -> LEDs).
+-- Based on the course template by J.S.D. Stokkink (Saxion, 2014).
+--
+--   {carry, sum1, sum0} = {a1, a0} + {b1, b0}
+--------------------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.std_logic_unsigned.all;
 
-ENTITY week1 is   -- THE NAME "adder" must be the same as the file name
-PORT ( a0,a1,b0,b1 : IN std_logic;
-       sum0,sum1,carry : OUT std_logic);
-END week1;
+entity two_bit_adder is
+  port (
+    a0, a1 : in  std_logic;   -- operand A (a1 = MSB)
+    b0, b1 : in  std_logic;   -- operand B (b1 = MSB)
+    sum0   : out std_logic;
+    sum1   : out std_logic;
+    carry  : out std_logic
+  );
+end entity two_bit_adder;
 
-ARCHITECTURE behaviour OF week1 is
-signal c1: std_logic;
-
-BEGIN
-    sum0 <= a0 XOR b0;
-    c1   <= (a0 AND b0);
-    sum1 <= a1 XOR b1 XOR c1;
-    carry <= (a1 AND b1) OR (c1 AND a1) OR (c1 AND b1);
-
-END behaviour;
+architecture dataflow of two_bit_adder is
+  signal c1 : std_logic;      -- carry from bit 0 into bit 1
+begin
+  -- bit 0: half adder
+  sum0  <= a0 xor b0;
+  c1    <= a0 and b0;
+  -- bit 1: full adder (carry-out is the majority function of a1, b1, c1)
+  sum1  <= a1 xor b1 xor c1;
+  carry <= (a1 and b1) or (c1 and a1) or (c1 and b1);
+end architecture dataflow;

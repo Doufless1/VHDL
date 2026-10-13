@@ -1,51 +1,46 @@
-LIBRARY IEEE;
-USE IEEE.STD_LOGIC_1164.ALL;
+--------------------------------------------------------------------------------
+-- parity_display_top : shows a 4-bit switch value, or its parity bit, on a
+-- 7-segment display (hierarchy lab: two sub-blocks wired together)
+--
+--   show_parity = '0' : display a as a hex digit (0-F)
+--   show_parity = '1' : display the even-parity bit of a (0 or 1)
+--
+--     a ---+----------------------+
+--          |                    +-+-----+    +---------------+
+--          +--> even_parity --->|  mux  |--->| seven_segment |---> seg_n
+--                               +-------+    |   _decoder    |
+--               show_parity --------+        +---------------+
+--------------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
 
-ENTITY top_module IS
-    PORT (
-        A : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-        Display_Select : IN STD_LOGIC;
-        segment_a, segment_b, segment_c, segment_d,
-        segment_e, segment_f, segment_g : OUT STD_LOGIC
-    );
-END top_module;
+entity parity_display_top is
+  port (
+    a           : in  std_logic_vector(3 downto 0);   -- switches
+    show_parity : in  std_logic;                      -- display select
+    seg_n       : out std_logic_vector(6 downto 0)    -- "abcdefg", active low
+  );
+end entity parity_display_top;
 
-ARCHITECTURE structural OF top_module IS
-    COMPONENT even_parity_checker
-        PORT (
-            A : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-            Parity_Out : OUT STD_LOGIC
-        );
-    END COMPONENT;
+architecture structural of parity_display_top is
+  signal parity  : std_logic;
+  signal display : std_logic_vector(3 downto 0);
+begin
 
-    COMPONENT seven_segment_display
-        PORT (
-            hex_digit : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-            segment_a, segment_b, segment_c, segment_d,
-            segment_e, segment_f, segment_g : OUT STD_LOGIC
-        );
-    END COMPONENT;
-
-    -- ✅ FIXED: Change Parity_Result to STD_LOGIC (1-bit)
-    SIGNAL Parity_Result : STD_LOGIC;  
-    SIGNAL Selected_Input : STD_LOGIC_VECTOR(3 DOWNTO 0);
-
-BEGIN
-    -- Parity checker instance
-    Parity_Checker: even_parity_checker PORT MAP (
-        A => A,
-        Parity_Out => Parity_Result -- ✅ FIXED: Direct connection, no index (0)
+  u_parity : entity work.even_parity
+    generic map (WIDTH => 4)
+    port map (
+      data   => a,
+      parity => parity
     );
 
-    -- Select between A and Parity result
-    Selected_Input <= A WHEN Display_Select = '0' ELSE ("000" & Parity_Result); -- ✅ FIXED: Use single bit
+  display <= a when show_parity = '0' else "000" & parity;
 
-    -- 7-Segment Display Instance
-    Display: seven_segment_display PORT MAP (
-        hex_digit => Selected_Input,
-        segment_a => segment_a, segment_b => segment_b, segment_c => segment_c,
-        segment_d => segment_d, segment_e => segment_e, segment_f => segment_f, 
-        segment_g => segment_g
+  u_decoder : entity work.seven_segment_decoder
+    generic map (ACTIVE_LOW => true)
+    port map (
+      hex => display,
+      seg => seg_n
     );
 
-END structural;
+end architecture structural;

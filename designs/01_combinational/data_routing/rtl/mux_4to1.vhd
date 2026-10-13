@@ -1,24 +1,32 @@
-LIBRARY IEEE;
-USE IEEE.STD_LOGIC_1164.ALL;
+--------------------------------------------------------------------------------
+-- mux_4to1 : 4-to-1 multiplexer, behavioural description with a case statement
+--
+--   y = d0 | d1 | d2 | d3 selected by s = "00" | "01" | "10" | "11"
+--
+-- The `when others` branch covers the non-binary std_logic values
+-- ('U', 'X', 'Z', ...) that exist in simulation but never in hardware.
+--------------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
 
-ENTITY mux_4to1 IS
-    PORT (
-        D0, D1, D2, D3 : IN STD_LOGIC;  -- 4 Data Inputs
-        S : IN STD_LOGIC_VECTOR(1 DOWNTO 0); -- Select Signal
-        Y : OUT STD_LOGIC  -- Output
-    );
-END mux_4to1;
+entity mux_4to1 is
+  port (
+    d0, d1, d2, d3 : in  std_logic;                     -- data inputs
+    s              : in  std_logic_vector(1 downto 0);  -- select
+    y              : out std_logic
+  );
+end entity mux_4to1;
 
-ARCHITECTURE behavioral OF mux_4to1 IS
-BEGIN
-    PROCESS (S, D0, D1, D2, D3)
-    BEGIN
-        CASE S IS
-            WHEN "00" => Y <= D0;
-            WHEN "01" => Y <= D1;
-            WHEN "10" => Y <= D2;
-            WHEN "11" => Y <= D3;
-            WHEN OTHERS => Y <= '0';
-        END CASE;
-    END PROCESS;
-END behavioral;
+architecture behavioral of mux_4to1 is
+begin
+  process (s, d0, d1, d2, d3)
+  begin
+    case s is
+      when "00"   => y <= d0;
+      when "01"   => y <= d1;
+      when "10"   => y <= d2;
+      when "11"   => y <= d3;
+      when others => y <= '0';
+    end case;
+  end process;
+end architecture behavioral;

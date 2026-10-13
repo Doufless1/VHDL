@@ -1,15 +1,20 @@
-LIBRARY IEEE;
-USE IEEE.STD_LOGIC_1164.ALL;
+--------------------------------------------------------------------------------
+-- full_adder : 1-bit full adder, the building block of ripple_carry_adder
+--------------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
 
-ENTITY full_adder IS
-    PORT (
-        A, B, Cin : IN std_logic;
-        Sum, Cout : OUT std_logic
-    );
-END full_adder;
+entity full_adder is
+  port (
+    a, b : in  std_logic;
+    cin  : in  std_logic;
+    sum  : out std_logic;
+    cout : out std_logic
+  );
+end entity full_adder;
 
-ARCHITECTURE behavior OF full_adder IS
-BEGIN
-    Sum  <= A XOR B XOR Cin;
-    Cout <= (A AND B) OR (Cin AND (A XOR B));
-END behavior;
+architecture dataflow of full_adder is
+begin
+  sum  <= a xor b xor cin;
+  cout <= (a and b) or (cin and (a xor b));
+end architecture dataflow;

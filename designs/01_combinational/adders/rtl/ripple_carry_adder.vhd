@@ -1,26 +1,49 @@
-LIBRARY IEEE;
-USE IEEE.STD_LOGIC_1164.ALL;
+--------------------------------------------------------------------------------
+-- ripple_carry_adder : WIDTH-bit adder built structurally from full adders
+--
+-- Week-2 lab ("three_bit_adder") generalised with a generic and a
+-- for-generate loop; WIDTH = 3 reproduces the original board design.
+--
+--   {cout, sum} = a + b + cin        (unsigned, WIDTH bits)
+--
+-- The carry ripples through WIDTH full adders, so the critical path grows
+-- linearly with WIDTH. Fine for small widths; wide adders use the FPGA's
+-- dedicated carry chain (write `a + b` with numeric_std) or a carry-lookahead
+-- structure instead.
+--------------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
 
-ENTITY three_bit_adder IS
-    PORT (
-        A, B : IN std_logic_vector(2 DOWNTO 0);
-        Cin  : IN std_logic;
-        Sum  : OUT std_logic_vector(2 DOWNTO 0);
-        Cout : OUT std_logic
-    );
-END three_bit_adder;
+entity ripple_carry_adder is
+  generic (
+    WIDTH : positive := 3
+  );
+  port (
+    a, b : in  std_logic_vector(WIDTH - 1 downto 0);
+    cin  : in  std_logic;
+    sum  : out std_logic_vector(WIDTH - 1 downto 0);
+    cout : out std_logic
+  );
+end entity ripple_carry_adder;
 
-ARCHITECTURE structural OF three_bit_adder IS
-    COMPONENT full_adder
-        PORT (
-            A, B, Cin : IN std_logic;
-            Sum, Cout : OUT std_logic
-        );
-    END COMPONENT;
-    
-    SIGNAL C1, C2 : std_logic;
-BEGIN
-    FA0: full_adder PORT MAP (A(0), B(0), Cin, Sum(0), C1);
-    FA1: full_adder PORT MAP (A(1), B(1), C1, Sum(1), C2);
-    FA2: full_adder PORT MAP (A(2), B(2), C2, Sum(2), Cout);
-END structural;
+architecture structural of ripple_carry_adder is
+  -- carry(i) is the carry into bit i; carry(WIDTH) is the final carry-out
+  signal carry : std_logic_vector(WIDTH downto 0);
+begin
+
+  carry(0) <= cin;
+
+  gen_bit : for i in 0 to WIDTH - 1 generate
+    u_fa : entity work.full_adder
+      port map (
+        a    => a(i),
+        b    => b(i),
+        cin  => carry(i),
+        sum  => sum(i),
+        cout => carry(i + 1)
+      );
+  end generate gen_bit;
+
+  cout <= carry(WIDTH);
+
+end architecture structural;

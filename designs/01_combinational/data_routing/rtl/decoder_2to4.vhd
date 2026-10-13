@@ -1,23 +1,31 @@
-LIBRARY IEEE;
-USE IEEE.STD_LOGIC_1164.ALL;
+--------------------------------------------------------------------------------
+-- decoder_2to4 : binary-to-one-hot decoder (2 inputs, 4 outputs)
+--
+--   a = "00" -> y = "0001"      a = "10" -> y = "0100"
+--   a = "01" -> y = "0010"      a = "11" -> y = "1000"
+--
+-- Typical use: chip-select / address decoding (exactly one output is active).
+--------------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
 
-ENTITY two_to_four_decoder IS
-    PORT (
-        A : IN STD_LOGIC_VECTOR(1 DOWNTO 0); -- 2-bit input
-        Y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0) -- 4-bit output
-    );
-END two_to_four_decoder;
+entity decoder_2to4 is
+  port (
+    a : in  std_logic_vector(1 downto 0);
+    y : out std_logic_vector(3 downto 0)   -- one-hot, y(i) = '1' when a = i
+  );
+end entity decoder_2to4;
 
-ARCHITECTURE behavior OF two_to_four_decoder IS
-BEGIN
-    PROCESS(A)
-    BEGIN
-        CASE A IS
-            WHEN "00" => Y <= "0001"; -- Output Y0 active
-            WHEN "01" => Y <= "0010"; -- Output Y1 active
-            WHEN "10" => Y <= "0100"; -- Output Y2 active
-            WHEN "11" => Y <= "1000"; -- Output Y3 active
-            WHEN OTHERS => Y <= "0000"; -- Default case
-        END CASE;
-    END PROCESS;
-END behavior;
+architecture behavioral of decoder_2to4 is
+begin
+  process (a)
+  begin
+    case a is
+      when "00"   => y <= "0001";
+      when "01"   => y <= "0010";
+      when "10"   => y <= "0100";
+      when "11"   => y <= "1000";
+      when others => y <= "0000";
+    end case;
+  end process;
+end architecture behavioral;

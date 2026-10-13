@@ -1,13 +1,30 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+--------------------------------------------------------------------------------
+-- tristate_buffer : WIDTH-bit tri-state driver for a shared bus
+--
+-- oe_n = '0' : the buffer drives `a` onto the bus
+-- oe_n = '1' : the buffer releases the bus (high impedance, 'Z')
+--
+-- Several tristate_buffers may share one bus as long as at most one is
+-- enabled at a time; two enabled drivers with different data is bus
+-- contention (resolves to 'X' in simulation, short-circuit current in
+-- hardware). Inside an FPGA, tri-states only exist in the I/O pins, so this
+-- block belongs at the top level, driving an `inout` device pin.
+--------------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
 
-entity tristate_buffer_8bit is
-    Port ( A : in STD_LOGIC_VECTOR (7 downto 0);
-           Control : in STD_LOGIC;
-           Tri_out : inout STD_LOGIC_VECTOR (7 downto 0));
-end tristate_buffer_8bit;
+entity tristate_buffer is
+  generic (
+    WIDTH : positive := 8
+  );
+  port (
+    a      : in    std_logic_vector(WIDTH - 1 downto 0);
+    oe_n   : in    std_logic;                              -- output enable, active low
+    bus_io : inout std_logic_vector(WIDTH - 1 downto 0)
+  );
+end entity tristate_buffer;
 
-architecture Behavioral of tristate_buffer_8bit is
+architecture behavioral of tristate_buffer is
 begin
-    Tri_out <= A when Control = '0' else (others => 'Z');
-end Behavioral;
+  bus_io <= a when oe_n = '0' else (others => 'Z');
+end architecture behavioral;

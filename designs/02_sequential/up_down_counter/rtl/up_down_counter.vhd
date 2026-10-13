@@ -1,36 +1,49 @@
--- File: up_down_counter.vhd
-LIBRARY IEEE;
-USE IEEE.STD_LOGIC_1164.ALL;
-USE IEEE.STD_LOGIC_ARITH.ALL;
-USE IEEE.STD_LOGIC_UNSIGNED.ALL;
+--------------------------------------------------------------------------------
+-- up_down_counter : WIDTH-bit synchronous binary up/down counter
+--
+-- * counts on the rising edge while enable = '1'
+-- * up_down = '1' counts up, '0' counts down; wraps modulo 2**WIDTH
+-- * asynchronous, active-high reset to zero
+--
+-- Uses ieee.numeric_std (the IEEE standard arithmetic package) instead of the
+-- vendor packages std_logic_arith / std_logic_unsigned from the course slides.
+--------------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
-ENTITY up_down_counter IS
-    PORT (
-        Clock      : IN  STD_LOGIC;
-        Reset      : IN  STD_LOGIC;
-        Enable     : IN  STD_LOGIC;
-        Up_Down    : IN  STD_LOGIC;  -- '1' for up, '0' for down
-        Count      : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
-    );
-END up_down_counter;
+entity up_down_counter is
+  generic (
+    WIDTH : positive := 8
+  );
+  port (
+    clk     : in  std_logic;
+    arst    : in  std_logic;                              -- async reset, active high
+    enable  : in  std_logic;
+    up_down : in  std_logic;                              -- '1' = up, '0' = down
+    count   : out std_logic_vector(WIDTH - 1 downto 0)
+  );
+end entity up_down_counter;
 
-ARCHITECTURE behavior OF up_down_counter IS
-    SIGNAL internal_count : STD_LOGIC_VECTOR(7 DOWNTO 0);
-BEGIN
-    Count <= internal_count;
+architecture rtl of up_down_counter is
+  signal count_reg : unsigned(WIDTH - 1 downto 0);
+begin
 
-    PROCESS (Clock, Reset)
-    BEGIN
-        IF Reset = '1' THEN
-            internal_count <= (OTHERS => '0');
-        ELSIF Rising_Edge(Clock) THEN
-            IF Enable = '1' THEN
-                IF Up_Down = '1' THEN
-                    internal_count <= internal_count + 1;
-                ELSE
-                    internal_count <= internal_count - 1;
-                END IF;
-            END IF;
-        END IF;
-    END PROCESS;
-END behavior;
+  process (clk, arst)
+  begin
+    if arst = '1' then
+      count_reg <= (others => '0');
+    elsif rising_edge(clk) then
+      if enable = '1' then
+        if up_down = '1' then
+          count_reg <= count_reg + 1;
+        else
+          count_reg <= count_reg - 1;
+        end if;
+      end if;
+    end if;
+  end process;
+
+  count <= std_logic_vector(count_reg);
+
+end architecture rtl;

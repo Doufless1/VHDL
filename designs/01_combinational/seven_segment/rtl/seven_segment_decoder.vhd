@@ -1,47 +1,56 @@
-LIBRARY IEEE;
-USE IEEE.STD_LOGIC_1164.ALL;
+--------------------------------------------------------------------------------
+-- seven_segment_decoder : 4-bit hex digit -> 7-segment pattern (0-9, A-F)
+--
+-- Segment layout         seg bit order (as in the table below):
+--      a                   seg(6) = a   seg(3) = d   seg(0) = g
+--    f   b                 seg(5) = b   seg(2) = e
+--      g                   seg(4) = c   seg(1) = f
+--    e   c
+--      d
+--
+-- The lab board uses a common-anode display (a segment lights when its pin
+-- is driven low), hence ACTIVE_LOW = true by default.
+--------------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
 
-ENTITY seven_segment_display IS
-    PORT(
-        hex_digit : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-        segment_a, segment_b, segment_c, segment_d,
-        segment_e, segment_f, segment_g : OUT std_logic
-    );
-END seven_segment_display;
+entity seven_segment_decoder is
+  generic (
+    ACTIVE_LOW : boolean := true
+  );
+  port (
+    hex : in  std_logic_vector(3 downto 0);
+    seg : out std_logic_vector(6 downto 0)   -- "abcdefg"
+  );
+end entity seven_segment_decoder;
 
-ARCHITECTURE behavior OF seven_segment_display IS
-    SIGNAL segment_data : STD_LOGIC_VECTOR(6 DOWNTO 0);
-BEGIN
-    PROCESS (hex_digit)
-    BEGIN
-        CASE hex_digit IS
-            WHEN "0000" => segment_data <= "1111110";
-            WHEN "0001" => segment_data <= "0110000";
-            WHEN "0010" => segment_data <= "1101101";
-            WHEN "0011" => segment_data <= "1111001";
-            WHEN "0100" => segment_data <= "0110011";
-            WHEN "0101" => segment_data <= "1011011";
-            WHEN "0110" => segment_data <= "1011111";
-            WHEN "0111" => segment_data <= "1110000";
-            WHEN "1000" => segment_data <= "1111111";
-            WHEN "1001" => segment_data <= "1111011";
-            WHEN "1010" => segment_data <= "1110111";
-            WHEN "1011" => segment_data <= "0011111";
-            WHEN "1100" => segment_data <= "1001110";
-            WHEN "1101" => segment_data <= "0111101";
-            WHEN "1110" => segment_data <= "1001111";
-            WHEN "1111" => segment_data <= "1000111";
-            WHEN OTHERS => segment_data <= "0000000";
-        END CASE;
-    END PROCESS;
-    
-    segment_a <= NOT segment_data(6);
-    segment_b <= NOT segment_data(5);
-    segment_c <= NOT segment_data(4);
-    segment_d <= NOT segment_data(3);
-    segment_e <= NOT segment_data(2);
-    segment_f <= NOT segment_data(1);
-    segment_g <= NOT segment_data(0);
-END behavior;
+architecture behavioral of seven_segment_decoder is
+  signal lit : std_logic_vector(6 downto 0);  -- '1' = segment on
+begin
 
+  process (hex)
+  begin
+    case hex is                      --  abcdefg
+      when "0000" => lit <= "1111110";   -- 0
+      when "0001" => lit <= "0110000";   -- 1
+      when "0010" => lit <= "1101101";   -- 2
+      when "0011" => lit <= "1111001";   -- 3
+      when "0100" => lit <= "0110011";   -- 4
+      when "0101" => lit <= "1011011";   -- 5
+      when "0110" => lit <= "1011111";   -- 6
+      when "0111" => lit <= "1110000";   -- 7
+      when "1000" => lit <= "1111111";   -- 8
+      when "1001" => lit <= "1111011";   -- 9
+      when "1010" => lit <= "1110111";   -- A
+      when "1011" => lit <= "0011111";   -- b
+      when "1100" => lit <= "1001110";   -- C
+      when "1101" => lit <= "0111101";   -- d
+      when "1110" => lit <= "1001111";   -- E
+      when "1111" => lit <= "1000111";   -- F
+      when others => lit <= "0000000";   -- blank for non-binary input
+    end case;
+  end process;
 
+  seg <= not lit when ACTIVE_LOW else lit;
+
+end architecture behavioral;

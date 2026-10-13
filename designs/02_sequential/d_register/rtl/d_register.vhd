@@ -1,23 +1,35 @@
-LIBRARY IEEE;
-USE IEEE.STD_LOGIC_1164.ALL;
+--------------------------------------------------------------------------------
+-- d_register : WIDTH-bit register of D flip-flops
+--
+-- * negative-edge triggered (lab requirement: captures d on the falling edge)
+-- * asynchronous, active-high reset: q clears immediately, without a clock
+--
+-- The lab board exposes 6 switches/LEDs for this exercise, so the Quartus
+-- build sets WIDTH = 6; the default is a full byte.
+--------------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
 
-ENTITY d_flip_flop_8bit IS
-    PORT (
-        D      : IN  STD_LOGIC_VECTOR(5 DOWNTO 0); -- 8-bit Data Input
-        Clock  : IN  STD_LOGIC;  -- Clock
-        Reset  : IN  STD_LOGIC;  -- Asynchronous Reset
-        Q      : OUT STD_LOGIC_VECTOR(5 DOWNTO 0) -- 8-bit Data Output
-    );
-END d_flip_flop_8bit;
+entity d_register is
+  generic (
+    WIDTH : positive := 8
+  );
+  port (
+    clk  : in  std_logic;
+    arst : in  std_logic;                              -- async reset, active high
+    d    : in  std_logic_vector(WIDTH - 1 downto 0);
+    q    : out std_logic_vector(WIDTH - 1 downto 0)
+  );
+end entity d_register;
 
-ARCHITECTURE behavior OF d_flip_flop_8bit IS
-BEGIN
-    PROCESS (Clock, Reset)
-    BEGIN
-        IF Reset = '1' THEN
-            Q <= (OTHERS => '0');  -- Reset all bits to 0
-        ELSIF falling_edge(Clock) THEN  -- Falling Edge Triggered
-            Q <= D;  -- Store Data
-        END IF;
-    END PROCESS;
-END behavior;
+architecture rtl of d_register is
+begin
+  process (clk, arst)
+  begin
+    if arst = '1' then
+      q <= (others => '0');
+    elsif falling_edge(clk) then
+      q <= d;
+    end if;
+  end process;
+end architecture rtl;
