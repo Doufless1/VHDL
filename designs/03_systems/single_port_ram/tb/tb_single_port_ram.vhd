@@ -82,6 +82,20 @@ begin
           access_ram(false, i, 0);
         end loop;
 
+      elsif run("read_latency_is_one_clock") then
+        -- block RAM has a registered read: a new address must not show up
+        -- on dout before the next rising edge (an asynchronous-read RAM would)
+        access_ram(true, 1, 16#11#);
+        access_ram(true, 2, 16#22#);
+        access_ram(false, 1, 0);                -- dout = mem(1)
+        wait until falling_edge(clk);
+        addr <= std_logic_vector(to_unsigned(2, ADDR_WIDTH));
+        wait for CLK_PERIOD / 4;                -- still before the rising edge
+        check_equal(unsigned(dout), 16#11#, "dout must hold until the clock edge");
+        wait until rising_edge(clk);
+        wait for 1 ns;
+        check_equal(unsigned(dout), 16#22#, "new address one edge later");
+
       elsif run("read_during_write_returns_new_data") then
         access_ram(true, 5, 16#11#);
         access_ram(true, 5, 16#22#);       -- check inside access_ram expects 0x22

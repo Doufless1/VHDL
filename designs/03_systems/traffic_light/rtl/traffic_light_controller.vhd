@@ -55,14 +55,18 @@ architecture rtl of traffic_light_controller is
 
   constant TIMER_MAX : natural := max3(MIN_GREEN_CYCLES, ORANGE_CYCLES, WALK_CYCLES) - 1;
 
+  -- Explicit power-up values (FPGA registers support them): the controller
+  -- starts in a safe state even before the reset button is ever pressed.
+  -- The formal proof found that without them the 2-bit state register could
+  -- power up in its unused fourth encoding, where no car lamp is lit.
   type state_t is (CARS_GREEN, CARS_ORANGE, CARS_RED);
-  signal state : state_t;
+  signal state : state_t := CARS_GREEN;
 
   -- one down-counter times every phase: loaded with (duration - 1) on entry,
   -- the phase ends on the clock edge where it reads zero
-  signal timer    : natural range 0 to TIMER_MAX;
+  signal timer    : natural range 0 to TIMER_MAX := MIN_GREEN_CYCLES - 1;
   signal btn_sync : std_logic;
-  signal request  : std_logic;
+  signal request  : std_logic := '0';
 
 begin
 

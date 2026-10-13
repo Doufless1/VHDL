@@ -1,0 +1,5 @@
+# Python packages for simulation, golden models and figures.
+# System tools (installed separately): GHDL, Yosys + yosys-plugin-ghdl, Z3.
+vunit_hdl==4.7.1
+numpy>=1.26
+matplotlib>=3.8

@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+# Same tool versions as a local Ubuntu 24.04 install (see README "Quick start").
+env:
+  APT_PACKAGES: ghdl-mcode yosys yosys-plugin-ghdl z3
+
+jobs:
+  simulate:
+    name: Simulation (VUnit + GHDL)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install tools
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends ghdl-mcode
+          pip install -r requirements.txt
+      - name: Run all testbenches
+        run: |
+          mkdir -p build
+          python run.py -p 4 --no-color --xunit-xml build/test-results.xml
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            build/test-results.xml
+            build/sim_data/
+
+  synthesis:
+    name: Synthesis + latch check (GHDL + Yosys)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends $APT_PACKAGES
+      - name: Synthesize every design, publish resource table
+        run: python3 scripts/synth_check.py --report | tee -a "$GITHUB_STEP_SUMMARY"
+
+  formal:
+    name: Formal proofs (PSL + Yosys + Z3)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends $APT_PACKAGES
+      - name: Prove all properties (base case + k-induction)
+        run: |
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          python3 scripts/formal_check.py | tee -a "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+  mutation:
+    name: Mutation testing (do the tests catch bugs?)
+    runs-on: ubuntu-24.04
+    needs: simulate
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install tools
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends ghdl-mcode
+          pip install -r requirements.txt
+      - name: Inject 20 bugs, expect every one to be caught
+        run: |
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          python scripts/mutation_test.py | tee -a "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
