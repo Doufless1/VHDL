@@ -1,6 +1,6 @@
 # 4x4 INT8 systolic array as an IP block: 16 MACs map onto the MAX 10's
-# embedded multipliers. Compile-only: the 640-bit operand/result buses stay
-# on-chip (virtual pins) so only the core is timed.
+# embedded multipliers. Compile-only: the 576 bits of operand/result buses
+# stay on-chip (virtual pins) so only the core is timed.
 #   quartus_sh -t designs/04_capstones/systolic_array/quartus/systolic_array.tcl
 #   quartus_sh --flow compile build/quartus/systolic_array/systolic_array
 set design_dir [file dirname [file normalize [info script]]]

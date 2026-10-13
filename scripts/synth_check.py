@@ -8,7 +8,10 @@
    `ghdl --synth`. GHDL refuses to infer latches, so an accidental latch fails
    this step. latch_inferred (the deliberate lab demo) must fail without
    --latches - this proves the gate works - and is then built with it.
-2. Resource estimate (--report): Yosys maps each design to a plain LUT4 +
+2. Quartus project scripts: every designs/*/*/quartus/*.tcl is executed
+   against a stub of the Quartus Tcl API (no vendor tools in CI), so a typo or a
+   missing source/constraint file fails here instead of on the user's machine.
+3. Resource estimate (--report): Yosys maps each design to a plain LUT4 +
    carry-chain FPGA with hard multiply-accumulate blocks (iCE40 UltraPlus,
    synth_ice40 -dsp) - architecturally close to the MAX 10 logic element -
    and prints a Markdown table. Useful for comparing designs and spotting
@@ -23,6 +26,7 @@ from __future__ import annotations
 import argparse
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -74,6 +78,27 @@ def ghdl_synth(work: Path, top: str, generics: dict[str, int], latches: bool = F
     cmd += [f"-g{k}={v}" for k, v in generics.items()]
     cmd += ["--latches"] if latches else []
     return subprocess.run(cmd + [top], capture_output=True, text=True)
+
+
+def check_quartus_scripts() -> bool:
+    """Execute every Quartus project script against the API stub."""
+    if shutil.which("tclsh") is None:
+        print("SKIP  Quartus project scripts (tclsh not installed)")
+        return True
+    stub = ROOT / "scripts" / "quartus" / "api_stub"
+    ok = True
+    with tempfile.TemporaryDirectory() as tmp:
+        for script in sorted(ROOT.glob("designs/*/*/quartus/*.tcl")):
+            # the helper only creates an empty build/quartus/<project>/ folder (git-ignored)
+            env = dict(os.environ, TCLLIBPATH=str(stub))
+            result = subprocess.run(["tclsh", str(script)], capture_output=True, text=True,
+                                    env=env, cwd=tmp)
+            passed = result.returncode == 0 and "Created " in result.stdout
+            ok &= passed
+            print(f"{'PASS' if passed else 'FAIL'}  Quartus project {script.relative_to(ROOT)}")
+            if not passed:
+                print("      " + (result.stderr or result.stdout).strip().replace("\n", "\n      "))
+    return ok
 
 
 def ghdl_prefix() -> str:
@@ -135,6 +160,7 @@ def main() -> int:
             print(f"{'PASS' if rejected and allowed else 'FAIL'}  {top} "
                   "(intentional latch: rejected by default, builds with --latches)")
 
+    ok &= check_quartus_scripts()
     print("Synthesis check passed." if ok else "Synthesis check FAILED.")
 
     if args.report and ok:

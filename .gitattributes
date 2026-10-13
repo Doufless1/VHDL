@@ -1,0 +1,7 @@
+# Store text with LF line endings and check it out with LF on every OS (Quartus,
+# GHDL and Python all accept LF), so editing on Windows creates no CRLF churn.
+* text=auto eol=lf
+
+*.pdf binary
+*.png binary
+*.gif binary

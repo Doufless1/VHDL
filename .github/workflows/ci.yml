@@ -7,7 +7,7 @@ on:
 
 # Same tool versions as a local Ubuntu 24.04 install (see README "Quick start").
 env:
-  APT_PACKAGES: ghdl-mcode yosys yosys-plugin-ghdl z3
+  APT_PACKAGES: ghdl-mcode yosys yosys-plugin-ghdl z3 tcl
 
 # An explicit `shell: bash` runs steps with -eo pipefail, so a failing check
 # piped into `tee` still fails the job (the implicit default has no pipefail).
