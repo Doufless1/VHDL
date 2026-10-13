@@ -126,6 +126,10 @@ begin
         send(character'pos('H'));
         wait_received(1);
         check_equal(pop_integer(received), character'pos('H'), "'H'");
+        wait until tx_ready = '1' for BIT_TIME;     -- after the stop bit ...
+        wait for BIT_TIME;
+        check_equal(tx_ready, '1', "ready again after the frame");
+        check_equal(tx, '1', "line back to idle");
 
       elsif run("back_to_back_stream_has_no_gaps") then
         for i in expected'range loop

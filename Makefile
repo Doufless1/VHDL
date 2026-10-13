@@ -11,7 +11,7 @@ help:
 	@echo "make report    ... and print a resource-usage table (Yosys)"
 	@echo "make formal    prove the PSL properties (Yosys + Z3)            ~35 s"
 	@echo "make mutation  inject 20 bugs, check the tests catch each one   ~1 min"
-	@echo "make figures   regenerate the plots in docs/images/"
+	@echo "make figures   re-simulate and redraw the figures in docs/images/"
 	@echo "make all       test + synth + formal + mutation (what CI runs)"
 	@echo "make clean     remove all generated files"
 
@@ -32,7 +32,7 @@ formal:
 mutation:
 	$(PYTHON) scripts/mutation_test.py
 
-figures: test
+figures:
 	$(PYTHON) scripts/make_figures.py
 
 clean:
