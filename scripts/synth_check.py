@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Synthesis check for every RTL top level (GHDL synthesis + Yosys).
 
+0. Portability: all RTL must analyze as strict VHDL-93 (the default of
+   Quartus Prime Lite and the dialect every synthesis tool supports);
+   VHDL-2008 is reserved for the testbenches.
 1. Synthesizability + latch gate: every top is synthesized with
    `ghdl --synth`. GHDL refuses to infer latches, so an accidental latch fails
    this step. latch_inferred (the deliberate lab demo) must fail without
@@ -52,6 +55,20 @@ TOPS: dict[str, dict[str, int]] = {
 EXPECTED_LATCHES = {"latch_inferred"}
 
 
+def analyze(work: Path, std: str) -> str:
+    """Import all RTL, then let `ghdl -m` analyze every top in dependency order.
+
+    Returns the error output ('' on success)."""
+    errors = ""
+    subprocess.run(["ghdl", "-i", f"--std={std}", f"--workdir={work}", *map(str, RTL)], check=True)
+    for top in [*TOPS, *EXPECTED_LATCHES]:
+        result = subprocess.run(["ghdl", "-m", f"--std={std}", f"--workdir={work}", top],
+                                capture_output=True, text=True, cwd=work)
+        if result.returncode:
+            errors += result.stderr
+    return errors
+
+
 def ghdl_synth(work: Path, top: str, generics: dict[str, int], latches: bool = False) -> subprocess.CompletedProcess:
     cmd = ["ghdl", "--synth", "--std=08", f"--workdir={work}", "--out=none"]
     cmd += [f"-g{k}={v}" for k, v in generics.items()]
@@ -91,12 +108,17 @@ def main() -> int:
 
     ok = True
     with tempfile.TemporaryDirectory() as tmp:
+        errors = analyze(Path(tmp), "93c")
+        ok &= not errors
+        print(f"{'FAIL' if errors else 'PASS'}  all RTL is strict VHDL-93 ({len(RTL)} files)")
+        if errors:
+            print("      " + errors.strip().replace("\n", "\n      "))
+
+    with tempfile.TemporaryDirectory() as tmp:
         work = Path(tmp)
-        # import all files, then let `ghdl -m` analyze each top in dependency order
-        subprocess.run(["ghdl", "-i", "--std=08", f"--workdir={work}", *map(str, RTL)], check=True)
-        for top in [*TOPS, *EXPECTED_LATCHES]:
-            subprocess.run(["ghdl", "-m", "--std=08", f"--workdir={work}", top],
-                           capture_output=True, cwd=work, check=True)
+        errors = analyze(work, "08")
+        if errors:
+            sys.exit(errors)
 
         for top, generics in TOPS.items():
             result = ghdl_synth(work, top, generics)

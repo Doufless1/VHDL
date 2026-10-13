@@ -9,13 +9,19 @@ on:
 env:
   APT_PACKAGES: ghdl-mcode yosys yosys-plugin-ghdl z3
 
+# An explicit `shell: bash` runs steps with -eo pipefail, so a failing check
+# piped into `tee` still fails the job (the implicit default has no pipefail).
+defaults:
+  run:
+    shell: bash
+
 jobs:
   simulate:
     name: Simulation (VUnit + GHDL)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -30,7 +36,7 @@ jobs:
           python run.py -p 4 --no-color --xunit-xml build/test-results.xml
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: test-results
           path: |
@@ -41,7 +47,7 @@ jobs:
     name: Synthesis + latch check (GHDL + Yosys)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install tools
         run: |
           sudo apt-get update -q
@@ -53,7 +59,7 @@ jobs:
     name: Formal proofs (PSL + Yosys + Z3)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install tools
         run: |
           sudo apt-get update -q
@@ -69,8 +75,8 @@ jobs:
     runs-on: ubuntu-24.04
     needs: simulate
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
